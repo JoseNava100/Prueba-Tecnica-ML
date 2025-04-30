@@ -55,7 +55,7 @@ La solución incluye:
 
 3. Instala dependencias:
    ```bash
-   pip install -r requirements.txt
+   pip freeze > requirements.txt
    ```
 
 4. Configura las variables de entorno:
