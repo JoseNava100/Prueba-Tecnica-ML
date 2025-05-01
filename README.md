@@ -43,7 +43,7 @@ La solución incluye:
 
 1. Clona el proyecto:
    ```bash
-   git clone https://github.com/JoseNava100/Prueba-Tecnica-ML.clone
+   git clone https://github.com/JoseNava100/Prueba-Tecnica-ML.git
    cd Prueba-Tecnica-ML
    ```
 
@@ -55,7 +55,7 @@ La solución incluye:
 
 3. Instala dependencias:
    ```bash
-   pip freeze > requirements.txt
+   pip install -r requirements.txt
    ```
 
 4. Configura las variables de entorno:
@@ -67,13 +67,13 @@ La solución incluye:
    DB_PASSWORD=password
    ```
 
-4. Correr los archivos main_test.py y train_model para su uso:
+5. Correr los archivos main_test.py y train_model para su uso:
    ```bash
    python main_test.py
    python train_model.py
    ```
 
-5. Ejecuta el servidor:
+6. Ejecuta el servidor:
    ```bash
    uvicorn main:app --reload
    ```
