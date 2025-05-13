@@ -13,7 +13,7 @@ Este proyecto es una solución al reto propuesto para un puesto de Backend/Suppo
 La solución incluye:
 - Un nuevo modelo ML (`best_model.zahoree`) previamente entrenado ya que el dado tenia una versión anterior y no era compatible.
 - Un servicio REST API con dos endpoints: `GET` y `POST`.
-- MIgración persistente de datos en una base de datos MySQL.
+- Migración persistente de datos en una base de datos MySQL.
 - Contenedor Docker con todas las dependencias para facilitar su ejecución y despliegue.
 
 ---
