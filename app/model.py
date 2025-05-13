@@ -1,32 +1,41 @@
-import pickle
+import joblib
 import pandas as pd
+import numpy as np
+from sklearn.compose import ColumnTransformer
+from typing import List
 
-# Cargamos el modelo y el codificador creado anteriormente 
-with open("data/clf.zahoree", "rb") as f:
-    model = pickle.load(f)
+def load_model_artifacts():
+    try:
+        model = joblib.load("data/best_model.zahoree")
+        return model
+    except FileNotFoundError as e:
+        raise FileNotFoundError("No se encontraron los archivos del modelo. Asegúrate de haber entrenado el modelo primero.") from e
 
-with open("data/encoder.pkl", "rb") as f:
-    encoder = pickle.load(f)
-
-# Creamos una función para predecir el turnover_score de acuerdo a nuestro modelo y codificador generado
 def predict_scores(df: pd.DataFrame) -> pd.DataFrame:
-    cat_cols = ['BusinessTravel', 'Department', 'EducationField', 'Gender', 'JobRole', 'MaritalStatus', 'OverTime']
 
-    # Debugs
-    # print("Columnas antes de codificar:", df.columns.tolist())
-    # print("Columnas categóricas detectadas:", cat_cols)
-
-    # Creamos una copia solo para las variables usadas en el modelo
-    X = df.copy()
-
-    # Codificamos las categóricas en la copia
-    X[cat_cols] = encoder.transform(X[cat_cols])
-
-    # Hacemos predicción utilizando el modelo
-    expected_cols = model.feature_names_in_
-    X = X[expected_cols]  # Solo usamos estas para la predicción
-
-    # Agregamos la predicción obtenida al DataFrame original
-    df["turnover_score"] = model.predict_proba(X)[:, 1]
-
+    # Cargar modelo
+    model = load_model_artifacts()
+    
+    # Obtener las columnas esperadas por el modelo
+    try:
+        # Para sklearn >= 1.0
+        expected_cols = model.feature_names_in_
+    except AttributeError:
+        # Para versiones anteriores
+        expected_cols = model.named_steps['classifier'].feature_names_in_
+    
+    # Verificar que tenemos todas las columnas necesarias
+    missing_cols = set(expected_cols) - set(df.columns)
+    if missing_cols:
+        raise ValueError(f"Faltan columnas requeridas: {missing_cols}")
+    
+    # Preprocesar y predecir
+    try:
+        # Obtener probabilidades de clase positiva (turnover)
+        probas = model.predict_proba(df)[:, 1]
+        df = df.copy()  # Evitar SettingWithCopyWarning
+        df["turnover_score"] = probas
+    except Exception as e:
+        raise RuntimeError(f"Error al hacer predicciones: {str(e)}") from e
+    
     return df
