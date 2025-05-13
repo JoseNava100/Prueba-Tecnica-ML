@@ -6,8 +6,6 @@
 
 # Machine Learning Service
 
----
-
 ### Descripción del Proyecto
 
 Este proyecto es una solución al reto propuesto para un puesto de Backend/Support Engineer. El objetivo es crear un servicio de Machine Learning utilizando Python y Docker, empleando el dataset `HR_Employee_Attrition` para predecir la probabilidad de que un colaborador renuncie a la empresa (turnover_score).
