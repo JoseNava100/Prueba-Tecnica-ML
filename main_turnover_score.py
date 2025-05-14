@@ -1,5 +1,6 @@
 from app.utils import load_and_process_data
 
+# Verificamos los "turnover_score"
 df = load_and_process_data()
 
 print(df[["EmployeeNumber", "turnover_score"]].head(5))

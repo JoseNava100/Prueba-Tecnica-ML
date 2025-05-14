@@ -2,17 +2,17 @@ from app.database import get_connection
 
 def create_database_and_table():
     try:
-        # Conexión sin especificar base de datos
+        # Creamos la conexíon a la base de datos sin especificar una base de datos
         connection = get_connection(with_db=False)
         cursor = connection.cursor()
 
-        # Crear la base de datos si no existe
+        # Query para crear la base de datos
         cursor.execute("CREATE DATABASE IF NOT EXISTS hr_service")
 
-        # Conectarse a la nueva base de datos
+        # Conectamos a la base de datos recién creada
         connection.database = "hr_service"
 
-        # Crear la tabla employees
+        # Creamos la tabla "employees" si no existe
         create_table_query = """ 
         CREATE TABLE IF NOT EXISTS employees (
             EmployeeNumber INT PRIMARY KEY AUTO_INCREMENT,
@@ -55,9 +55,11 @@ def create_database_and_table():
         """
         cursor.execute(create_table_query)
 
+    # Creamos excepciones para manejar errores comunes, como conexión fallida o errores de SQL	
     except Exception as e:
         print(f"Error: {e}")
 
+    # Finalmente, cerramos la conexión
     finally:
         if 'connection' in locals() and connection.is_connected():
             cursor.close()

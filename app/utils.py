@@ -1,25 +1,25 @@
 import pandas as pd
 from app.model import predict_scores
-from typing import Optional
 
+# Función para cargar y procesar el DataFrame
 def load_and_process_data(csv_path: str = "data/HR_Employee_Attrition.csv", 
                          keep_employee_number: bool = True) -> pd.DataFrame:
 
-    # Columnas a eliminar
+    # Eliminamos columnas innnecesarias para calcular el "turnover_score"
     columns_to_drop = ["EmployeeCount", "Over18", "StandardHours"]
     
     try:
-        # Leer datos
+        # Cargamos el DataFrame
         df = pd.read_csv(csv_path)
         
-        # Opcionalmente eliminar EmployeeNumber
+        # Si "keep_employee_number = False", se añade "EmployeeNumber" a las columnas que se eliminarán.
         if not keep_employee_number:
             columns_to_drop.append("EmployeeNumber")
         
-        # Eliminar columnas no necesarias
+        # Eliminamos solo aquellas columnas de "columns_to_drop" que realmente estén presentes en el archivo.
         df = df.drop(columns=[col for col in columns_to_drop if col in df.columns])
         
-        # Asegurar tipos correctos para columnas categóricas
+        # Aseguramos que las columnas categóricas estén en el formato correcto, si alguna columna falla o no esta presente, lanza un error
         categorical_cols = ['BusinessTravel', 'Department', 'EducationField',
                           'Gender', 'JobRole', 'MaritalStatus', 'OverTime']
         
@@ -29,11 +29,13 @@ def load_and_process_data(csv_path: str = "data/HR_Employee_Attrition.csv",
             else:
                 raise ValueError(f"Columna categórica requerida '{col}' no encontrada")
         
-        # Generar predicciones
+        # Llamomos la funcion de predicción para calcular el "turnover_score" de nuestro modelo
         df = predict_scores(df)
         
+        # Retornamos el DataFrame con el nuevo "turnover_score"
         return df
     
+    # Creamos excepciones para manejar errores comunes, como archivo no encontrado o errores de lectura
     except FileNotFoundError:
         raise FileNotFoundError(f"Archivo no encontrado: {csv_path}")
     except Exception as e:

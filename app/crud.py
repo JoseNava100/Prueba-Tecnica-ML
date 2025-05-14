@@ -1,15 +1,17 @@
 from app.database import get_connection
 import pandas as pd
-from typing import List
 
+# Función para guardar el DataFrame en la base de datos
 def save_dataframe_to_db(df: pd.DataFrame):
+    
+    # Abrimos la conexión a la base de datos y abrimos un cursor para ejecutar comandos
     conn = get_connection()
     cursor = conn.cursor()
 
-    # Columnas que realmente tienes + turnover_score
+    # Guardamos la lista de columnas disponibles en el DataFrame
     available_cols = df.columns.tolist()
     
-    # Columnas requeridas en la BD (ajustadas a lo que realmente tienes)
+    # Definimos las colunmas esperadas a recibir en la base de datos, tanto datos originales como el nuevo campo "turnover_score" 
     required_db_cols = [
         "Age", "Attrition", "BusinessTravel", "DailyRate", "Department",
         "DistanceFromHome", "Education", "EducationField", "EmployeeNumber",
@@ -22,16 +24,17 @@ def save_dataframe_to_db(df: pd.DataFrame):
         "YearsSinceLastPromotion", "YearsWithCurrManager", "turnover_score"
     ]
 
-    # Verificar y seleccionar solo las columnas disponibles
+    # Filtramos las columnas disponibles y tomamos solo las que estan presentes en el DataFrame
     cols_to_use = [col for col in required_db_cols if col in available_cols]
     
-    # Preparar query dinámica
+    # Preparamos una consulta dinamicamente
     placeholders = ", ".join(["%s"] * len(cols_to_use))
     columns_str = ", ".join(cols_to_use)
     query = f"REPLACE INTO employees ({columns_str}) VALUES ({placeholders})"
 
+    # Recorremos fila por fila el DataFrame y ejecutamos la consulta con los valores correspondientes, esto se convierte en una tupla para que coincida 
+    # con los pleceholders de la consulta y guardamos en la base de datos
     try:
-        # Insertar datos
         for _, row in df[cols_to_use].iterrows():
             cursor.execute(query, tuple(row))
         conn.commit()

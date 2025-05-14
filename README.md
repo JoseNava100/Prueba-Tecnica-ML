@@ -53,7 +53,18 @@ La solución incluye:
 {
     "message": "Empleado creado exitosamente",
     "employee_id": 3000,
-    "turnover_score": 0.18734125685120243
+    "turnover_score": 0.3055,
+    "risk_analysis": {
+        "risk_level": "Bajo Riesgo",
+        "interpretation": "Probabilidad de rotación: 30.5%",
+        "recommendation": "Situación estable",
+        "percentage": 30.5
+    },
+    "details": {
+        "score_scale": "0-1 (Donde 1 es mayor riesgo)",
+        "model_version": "1.0",
+        "timestamp": "2025-05-13T21:13:45.480886"
+    }
 }
 ```
 ---

@@ -40,7 +40,7 @@ class EmployeeCreate(BaseModel):
     YearsSinceLastPromotion: int
     YearsWithCurrManager: int
 
-# Petición test
+# Petición GET entrada
 @app.get("/")
 def root():
     return {"message": "API para empleados"}
@@ -69,48 +69,86 @@ def get_employee(employee_id: int):
         raise HTTPException(status_code=404, detail="Empleado no encontrado")
     return result
 
+from fastapi import HTTPException
+import pandas as pd
+from typing import Dict, List
+
 # Petición POST agregar Empleado
 @app.post("/employee")
 async def create_employee(employee: EmployeeCreate):
     conn = None
     try:
-        # Convertir los datos del empleado a DataFrame
+        # Convertimos los datos del empleado a DataFrame
         employee_dict = employee.dict()
         
-        # Crear DataFrame de un solo registro
+        # Creamos el DataFrame en un solo registro
         df = pd.DataFrame([employee_dict])
         
-        # Calcular el turnover_score
+        # Calculamos el "turnover_score" en base al modelo
         df_with_score = predict_scores(df)
         
-        # Obtener el score calculado
+        # Obtenemos el "turnover_score" calculado
         turnover_score = df_with_score["turnover_score"].iloc[0]
         employee_dict["turnover_score"] = turnover_score
         
-        # Columnas y placeholders para la consulta SQL
+        # Preparamos las columnas y placeholders para la consulta SQL dinamicamente
         columns = list(employee_dict.keys())
         placeholders = ["%s"] * len(columns)
         
-        # Consulta SQL para insertar
+        # Query dinamico para insertar el nuevo empleado
         query = f"""
             INSERT INTO employees ({', '.join(columns)})
             VALUES ({', '.join(placeholders)})
         """
         
-        # Ejecutar la inserción
+        # Ejecutamos la inserción
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(query, list(employee_dict.values()))
         conn.commit()
         
-        # Obtener el ID del nuevo empleado
+        # Obtenemos el ID del nuevo empleado
         employee_id = cursor.lastrowid
         cursor.close()
+
+        # Función para generar la visualización del score
+        def generate_risk_analysis(score: float) -> Dict:
+
+            # Determinamos el nivel de riesgo
+            if score >= 0.7:
+                risk_level = "Alto Riesgo"
+                recommendation = "Acción prioritaria requerida"
+            elif score >= 0.4:
+                risk_level = "Riesgo Moderado"
+                recommendation = "Monitoreo cercano recomendado"
+            else:
+                risk_level = "Bajo Riesgo"
+                recommendation = "Situación estable"
+            
+            # Porcentaje formateado
+            percentage = score * 100
+            
+            return {
+                "risk_level": risk_level,
+                "interpretation": f"Probabilidad de rotación: {percentage:.1f}%",
+                "recommendation": recommendation,
+                "percentage": round(percentage, 1)
+            }
+
+        # Generar el análisis de riesgo
+        risk_analysis = generate_risk_analysis(turnover_score)
         
+        # Retornamos una respuesta enriquecida
         return {
             "message": "Empleado creado exitosamente",
             "employee_id": employee_id,
-            "turnover_score": turnover_score
+            "turnover_score": round(turnover_score, 4),
+            "risk_analysis": risk_analysis,
+            "details": {
+                "score_scale": "0-1 (Donde 1 es mayor riesgo)",
+                "model_version": "1.0",
+                "timestamp": pd.Timestamp.now().isoformat()
+            }
         }
         
     except Exception as e:

@@ -1,0 +1,220 @@
+1. Empleado de alto riesgo (probable renuncia)
+
+{
+    "EmployeeNumber": 3001,
+    "Age": 25,
+    "Attrition": "Yes",
+    "BusinessTravel": "Travel_Frequently",
+    "DailyRate": 500.0,
+    "Department": "Sales",
+    "DistanceFromHome": 20,
+    "Education": 2,
+    "EducationField": "Marketing",
+    "EnvironmentSatisfaction": 1,
+    "Gender": "Male",
+    "HourlyRate": 40.0,
+    "JobInvolvement": 2,
+    "JobLevel": 1,
+    "JobRole": "Sales Representative",
+    "JobSatisfaction": 1,
+    "MaritalStatus": "Single",
+    "MonthlyIncome": 2500.0,
+    "MonthlyRate": 10000.0,
+    "NumCompaniesWorked": 4,
+    "OverTime": "Yes",
+    "PercentSalaryHike": 5.0,
+    "PerformanceRating": 2,
+    "RelationshipSatisfaction": 1,
+    "StockOptionLevel": 0,
+    "TotalWorkingYears": 2,
+    "TrainingTimesLastYear": 0,
+    "WorkLifeBalance": 1,
+    "YearsAtCompany": 1,
+    "YearsInCurrentRole": 1,
+    "YearsSinceLastPromotion": 1,
+    "YearsWithCurrManager": 0
+}
+
+Características clave:
+
+- Bajo salario (MonthlyIncome).
+- Alta rotación previa (NumCompaniesWorked = 4).
+- Baja satisfacción (JobSatisfaction = 1, WorkLifeBalance = 1).
+- Viajes frecuentes y horas extras.
+
+
+2. Empleado estable (bajo riesgo de renuncia)
+
+{
+    "EmployeeNumber": 3002,
+    "Age": 45,
+    "Attrition": "No",
+    "BusinessTravel": "Travel_Rarely",
+    "DailyRate": 1200.0,
+    "Department": "Human Resources",
+    "DistanceFromHome": 5,
+    "Education": 4,
+    "EducationField": "Human Resources",
+    "EnvironmentSatisfaction": 4,
+    "Gender": "Female",
+    "HourlyRate": 80.0,
+    "JobInvolvement": 4,
+    "JobLevel": 3,
+    "JobRole": "HR Manager",
+    "JobSatisfaction": 4,
+    "MaritalStatus": "Married",
+    "MonthlyIncome": 8000.0,
+    "MonthlyRate": 25000.0,
+    "NumCompaniesWorked": 1,
+    "OverTime": "No",
+    "PercentSalaryHike": 15.0,
+    "PerformanceRating": 4,
+    "RelationshipSatisfaction": 3,
+    "StockOptionLevel": 2,
+    "TotalWorkingYears": 15,
+    "TrainingTimesLastYear": 3,
+    "WorkLifeBalance": 3,
+    "YearsAtCompany": 10,
+    "YearsInCurrentRole": 5,
+    "YearsSinceLastPromotion": 2,
+    "YearsWithCurrManager": 4
+}
+
+Características clave:
+
+- Salario alto y buen nivel jerárquico (JobLevel = 3).
+- Baja rotación (NumCompaniesWorked = 1, YearsAtCompany = 10).
+- Alta satisfacción (JobSatisfaction = 4).
+- Sin horas extras y viajes raros.
+
+
+3. Empleado en punto de inflexión (riesgo medio)
+
+{
+    "EmployeeNumber": 3003,
+    "Age": 35,
+    "Attrition": "No",
+    "BusinessTravel": "Travel_Often",
+    "DailyRate": 900.0,
+    "Department": "Research & Development",
+    "DistanceFromHome": 15,
+    "Education": 3,
+    "EducationField": "Life Sciences",
+    "EnvironmentSatisfaction": 3,
+    "Gender": "Female",
+    "HourlyRate": 60.0,
+    "JobInvolvement": 3,
+    "JobLevel": 2,
+    "JobRole": "Lab Technician",
+    "JobSatisfaction": 2,
+    "MaritalStatus": "Divorced",
+    "MonthlyIncome": 4500.0,
+    "MonthlyRate": 18000.0,
+    "NumCompaniesWorked": 3,
+    "OverTime": "No",
+    "PercentSalaryHike": 10.0,
+    "PerformanceRating": 3,
+    "RelationshipSatisfaction": 2,
+    "StockOptionLevel": 1,
+    "TotalWorkingYears": 8,
+    "TrainingTimesLastYear": 1,
+    "WorkLifeBalance": 2,
+    "YearsAtCompany": 4,
+    "YearsInCurrentRole": 3,
+    "YearsSinceLastPromotion": 3,
+    "YearsWithCurrManager": 2
+}
+
+Características clave:
+
+- Satisfacción moderada pero con señales de estancamiento (YearsSinceLastPromotion = 3).
+- Viajes frecuentes y salario medio.
+- Posible riesgo si no hay crecimiento profesional.
+
+
+4. Empleado joven con potencial (bajo riesgo pero sensible)
+
+{
+    "EmployeeNumber": 3004,
+    "Age": 28,
+    "Attrition": "No",
+    "BusinessTravel": "Travel_Rarely",
+    "DailyRate": 750.0,
+    "Department": "IT",
+    "DistanceFromHome": 8,
+    "Education": 5,
+    "EducationField": "Computer Science",
+    "EnvironmentSatisfaction": 4,
+    "Gender": "Male",
+    "HourlyRate": 55.0,
+    "JobInvolvement": 4,
+    "JobLevel": 1,
+    "JobRole": "Systems Analyst",
+    "JobSatisfaction": 3,
+    "MaritalStatus": "Single",
+    "MonthlyIncome": 3800.0,
+    "MonthlyRate": 15000.0,
+    "NumCompaniesWorked": 2,
+    "OverTime": "No",
+    "PercentSalaryHike": 12.0,
+    "PerformanceRating": 3,
+    "RelationshipSatisfaction": 3,
+    "StockOptionLevel": 1,
+    "TotalWorkingYears": 4,
+    "TrainingTimesLastYear": 4,
+    "WorkLifeBalance": 3,
+    "YearsAtCompany": 2,
+    "YearsInCurrentRole": 1,
+    "YearsSinceLastPromotion": 1,
+    "YearsWithCurrManager": 1
+}
+
+Características clave:
+
+- Educación alta y satisfacción buena.
+- Salario bajo para su campo (posible riesgo si no hay aumentos).
+- Alto entrenamiento (TrainingTimesLastYear = 4) indica inversión de la empresa.
+
+
+5. Empleado desmotivado (alto riesgo a pesar de antigüedad)
+
+{
+    "EmployeeNumber": 3005,
+    "Age": 50,
+    "Attrition": "Yes",
+    "BusinessTravel": "Non-Travel",
+    "DailyRate": 600.0,
+    "Department": "Manufacturing",
+    "DistanceFromHome": 3,
+    "Education": 2,
+    "EducationField": "Technical Degree",
+    "EnvironmentSatisfaction": 2,
+    "Gender": "Male",
+    "HourlyRate": 30.0,
+    "JobInvolvement": 1,
+    "JobLevel": 1,
+    "JobRole": "Manufacturing Technician",
+    "JobSatisfaction": 1,
+    "MaritalStatus": "Married",
+    "MonthlyIncome": 3000.0,
+    "MonthlyRate": 12000.0,
+    "NumCompaniesWorked": 1,
+    "OverTime": "Yes",
+    "PercentSalaryHike": 3.0,
+    "PerformanceRating": 2,
+    "RelationshipSatisfaction": 2,
+    "StockOptionLevel": 0,
+    "TotalWorkingYears": 20,
+    "TrainingTimesLastYear": 0,
+    "WorkLifeBalance": 2,
+    "YearsAtCompany": 15,
+    "YearsInCurrentRole": 10,
+    "YearsSinceLastPromotion": 8,
+    "YearsWithCurrManager": 5
+}
+
+Características clave:
+
+- Antigüedad alta pero sin crecimiento (YearsInCurrentRole = 10).
+- Bajo salario y nula capacitación reciente.
+- Bajo desempeño (PerformanceRating = 2).
